@@ -1,0 +1,22 @@
+{
+    "name": "readable-spokable-pdf",
+    "version": "1.0.0",
+    "description": "Convert technical PDFs to readable, TTS-friendly documents using AI",
+    "main": "index.html",
+    "scripts": {
+        "bundle": "node tools/bundle.js",
+        "serve": "npx http-server -p 8000"
+    },
+    "keywords": [
+        "pdf",
+        "tts",
+        "text-to-speech",
+        "accessibility",
+        "gemini",
+        "ai"
+    ],
+    "author": "",
+    "license": "MIT",
+    "devDependencies": {},
+    "dependencies": {}
+}

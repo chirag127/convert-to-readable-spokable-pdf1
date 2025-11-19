@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Readable Spokable PDF</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/dark-mode.css">
+    <style>
+        .faq-item {
+            margin-bottom: 2rem;
+        }
+
+        .faq-question {
+            font-weight: 600;
+            font-size: 1.125rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .faq-answer {
+            margin-left: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="logo">📄→🔊</span>
+                <span class="brand-text">Readable Spokable PDF</span>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="faq.html" class="nav-link active">FAQ</a>
+                <a href="diagnostics.html" class="nav-link">Diagnostics</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section>
+            <h1>Frequently Asked Questions</h1>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: How do I get a Google AI Studio API key?</div>
+                <div class="faq-answer">
+                    <p>Visit <a href="https://aistudio.google.com/app/apikey" target="_blank">Google AI Studio</a>,
+                        sign in with your Google account, and click "Create API Key". Copy the key and paste it in
+                        the Settings panel of this app.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: Is this free to use?</div>
+                <div class="faq-answer">
+                    <p>The app itself is free. However, you need a Google AI Studio API key, which has a free tier
+                        with rate limits. For heavy usage, you may need to pay for API calls. Check
+                        <a href="https://ai.google.dev/pricing" target="_blank">Google AI Pricing</a> for current rates.
+                    </p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: What types of PDFs work best?</div>
+                <div class="faq-answer">
+                    <p>PDFs with selectable text work best. This includes most digital documents, research papers,
+                        and ebooks. Scanned PDFs (images of text) won't work as they require OCR, which this tool
+                        doesn't currently support.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: How long does processing take?</div>
+                <div class="faq-answer">
+                    <p>Processing time depends on document length, batch size, and API rate limits. A typical
+                        50-page document might take 5-15 minutes. Enable Turbo Mode in Settings to process multiple
+                        batches in parallel and speed things up.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: What happens if processing fails?</div>
+                <div class="faq-answer">
+                    <p>The app automatically retries failed batches and can failover to backup API keys and
+                        alternative models. You can also download partial results at any time, or retry failed
+                        batches manually after adjusting settings.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: Can I customize the transformation?</div>
+                <div class="faq-answer">
+                    <p>Yes! Go to Settings → Prompts to customize how the AI transforms your text. You can
+                        adjust the system prompt, transformation instructions, and specific prompts for tables,
+                        code, math, and figures.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: Is my data secure?</div>
+                <div class="faq-answer">
+                    <p>Yes. All processing happens in your browser. Your API key is stored only in LocalStorage,
+                        and files are stored only in IndexedDB (both local to your browser). The only external
+                        communication is with Google AI Studio to process text.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: Can I use this offline?</div>
+                <div class="faq-answer">
+                    <p>No. The app requires an internet connection to communicate with Google AI Studio's API.
+                        However, once a document is processed, you can access the stored results offline.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: What's the difference between models?</div>
+                <div class="faq-answer">
+                    <p>Different Gemini models have different capabilities and costs:
+                    <ul>
+                        <li><strong>Flash models:</strong> Faster and cheaper, good for most documents</li>
+                        <li><strong>Pro models:</strong> More capable, better for complex technical content</li>
+                        <li><strong>Experimental models:</strong> Latest features, may be unstable</li>
+                    </ul>
+                    The app tries models in priority order and automatically fails over if one doesn't work.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: I'm getting rate limit errors. What should I do?</div>
+                <div class="faq-answer">
+                    <p>Try these solutions:
+                    <ul>
+                        <li>Increase "Rate Limit Delay" in Settings</li>
+                        <li>Reduce "Parallel Chunks" or disable Turbo Mode</li>
+                        <li>Add a backup API key for automatic failover</li>
+                        <li>Wait a few minutes and retry</li>
+                        <li>Consider upgrading your Google AI Studio plan</li>
+                    </ul>
+                    </p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: Can I process multiple files at once?</div>
+                <div class="faq-answer">
+                    <p>Currently, the app processes one file at a time. However, you can queue multiple files
+                        by processing them sequentially. Batch processing multiple files simultaneously may be
+                        added in a future update.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: How do I report bugs or request features?</div>
+                <div class="faq-answer">
+                    <p>Visit the Contact page or open an issue on our GitHub repository. We welcome feedback
+                        and contributions!</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Q: Can I export to formats other than PDF?</div>
+                <div class="faq-answer">
+                    <p>Yes! After processing, you can download the transformed text as a plain text file.
+                        EPUB and Markdown export options are planned for future releases.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>

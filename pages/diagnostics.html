@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnostics - Readable Spokable PDF</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/dark-mode.css">
+    <style>
+        .diagnostic-section {
+            margin-bottom: 2rem;
+        }
+
+        .model-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .model-card {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 1rem;
+        }
+
+        .model-name {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .model-info {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        .log-viewer {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 1rem;
+            max-height: 400px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 0.875rem;
+        }
+
+        .log-entry {
+            padding: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .log-entry:last-child {
+            border-bottom: none;
+        }
+
+        .log-timestamp {
+            color: var(--text-secondary);
+        }
+
+        .log-level {
+            font-weight: 600;
+            margin: 0 0.5rem;
+        }
+
+        .log-level.info {
+            color: var(--primary-color);
+        }
+
+        .log-level.error {
+            color: var(--danger-color);
+        }
+
+        .log-level.warning {
+            color: var(--warning-color);
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="logo">📄→🔊</span>
+                <span class="brand-text">Readable Spokable PDF</span>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="faq.html" class="nav-link">FAQ</a>
+                <a href="diagnostics.html" class="nav-link active">Diagnostics</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section>
+            <h1>Diagnostics</h1>
+
+            <div class="diagnostic-section">
+                <h2>Available Models</h2>
+                <p>Click "Fetch Models" to see available Gemini models from the API.</p>
+                <button id="fetchModelsBtn" class="btn btn-primary">🔄 Fetch Models</button>
+                <button id="exportModelsBtn" class="btn btn-secondary">📥 Export List</button>
+                <div id="modelsList" class="model-list mt-2"></div>
+            </div>
+
+            <div class="diagnostic-section">
+                <h2>Storage Information</h2>
+                <div id="storageInfo" class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Storage Used:</span>
+                        <span id="storageUsed" class="info-value">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Storage Quota:</span>
+                        <span id="storageQuota" class="info-value">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Percentage:</span>
+                        <span id="storagePercent" class="info-value">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Stored Files:</span>
+                        <span id="storedFilesCount" class="info-value">-</span>
+                    </div>
+                </div>
+                <button id="refreshStorageBtn" class="btn btn-secondary mt-2">🔄 Refresh</button>
+            </div>
+
+            <div class="diagnostic-section">
+                <h2>Recent Logs</h2>
+                <div class="action-buttons mb-2">
+                    <button id="refreshLogsBtn" class="btn btn-secondary">🔄 Refresh Logs</button>
+                    <button id="exportLogsBtn" class="btn btn-secondary">📥 Export Logs</button>
+                    <button id="clearLogsBtn" class="btn btn-danger">🗑️ Clear Logs</button>
+                </div>
+                <div id="logViewer" class="log-viewer">
+                    <p class="empty-state">No logs yet</p>
+                </div>
+            </div>
+
+            <div class="diagnostic-section">
+                <h2>System Information</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Browser:</span>
+                        <span id="browserInfo" class="info-value">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Platform:</span>
+                        <span id="platformInfo" class="info-value">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Language:</span>
+                        <span id="languageInfo" class="info-value">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Online:</span>
+                        <span id="onlineInfo" class="info-value">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="diagnostic-section">
+                <h2>Export Support Bundle</h2>
+                <p>Download a diagnostic package including logs, settings, and system info for troubleshooting.</p>
+                <button id="exportBundleBtn" class="btn btn-primary">📦 Export Support Bundle</button>
+            </div>
+        </section>
+    </main>
+
+    <script type="module">
+        import storage from '../js/storage.js';
+        import settings from '../js/settings.js';
+        import GeminiAPI from '../js/gemini-api.js';
+        import { formatBytes, formatDate, downloadFile } from '../js/utils.js';
+
+        // Initialize
+        await storage.init();
+        await settings.init();
+
+        // Fetch models
+        document.getElementById('fetchModelsBtn').addEventListener('click', async () => {
+            const btn = document.getElementById('fetchModelsBtn');
+            btn.disabled = true;
+            btn.textContent = '⏳ Fetching...';
+
+            try {
+                const apiKey = settings.get('apiKey');
+                if (!apiKey) {
+                    alert('Please set your API key in Settings first');
+                    return;
+                }
+
+                const api = new GeminiAPI(apiKey);
+                const models = await api.listModels();
+
+                const modelsList = document.getElementById('modelsList');
+                modelsList.innerHTML = '';
+
+                if (models.length === 0) {
+                    modelsList.innerHTML = '<p>No models found</p>';
+                    return;
+                }
+
+                models.forEach(model => {
+                    const card = document.createElement('div');
+                    card.className = 'model-card';
+                    card.innerHTML = `
+                        <div class="model-name">${model.name}</div>
+                        <div class="model-info">
+                            ${model.displayName || ''}<br>
+                            ${model.description || ''}<br>
+                            <small>Input: ${model.inputTokenLimit || 'N/A'} | Output: ${model.outputTokenLimit || 'N/A'}</small>
+                        </div>
+                    `;
+                    modelsList.appendChild(card);
+                });
+
+            } catch (error) {
+                alert('Failed to fetch models: ' + error.message);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '🔄 Fetch Models';
+            }
+        });
+
+        // Export models
+        document.getElementById('exportModelsBtn').addEventListener('click', () => {
+            const modelsList = document.getElementById('modelsList');
+            const text = modelsList.innerText || 'No models loaded';
+            const blob = new Blob([text], { type: 'text/plain' });
+            downloadFile(blob, 'gemini-models.txt');
+        });
+
+        // Storage info
+        async function updateStorageInfo() {
+            const size = await storage.getSize();
+            const files = await storage.getAllFiles();
+
+            if (size) {
+                document.getElementById('storageUsed').textContent = formatBytes(size.usage);
+                document.getElementById('storageQuota').textContent = formatBytes(size.quota);
+                document.getElementById('storagePercent').textContent = size.percentage + '%';
+            }
+
+            document.getElementById('storedFilesCount').textContent = files.length;
+        }
+
+        document.getElementById('refreshStorageBtn').addEventListener('click', updateStorageInfo);
+        updateStorageInfo();
+
+        // Logs
+        async function updateLogs() {
+            const logs = await storage.getLogs(50);
+            const viewer = document.getElementById('logViewer');
+
+            if (logs.length === 0) {
+                viewer.innerHTML = '<p class="empty-state">No logs yet</p>';
+                return;
+            }
+
+            viewer.innerHTML = '';
+            logs.forEach(log => {
+                const entry = document.createElement('div');
+                entry.className = 'log-entry';
+                entry.innerHTML = `
+                    <span class="log-timestamp">${formatDate(new Date(log.timestamp), 'YYYY-MM-DD HH:mm:ss')}</span>
+                    <span class="log-level ${log.level}">[${log.level.toUpperCase()}]</span>
+                    <span>${log.type || 'general'}: ${JSON.stringify(log).substring(0, 200)}</span>
+                `;
+                viewer.appendChild(entry);
+            });
+        }
+
+        document.getElementById('refreshLogsBtn').addEventListener('click', updateLogs);
+        document.getElementById('exportLogsBtn').addEventListener('click', async () => {
+            const logs = await storage.getLogs(1000);
+            const text = JSON.stringify(logs, null, 2);
+            const blob = new Blob([text], { type: 'application/json' });
+            downloadFile(blob, 'logs.json');
+        });
+        document.getElementById('clearLogsBtn').addEventListener('click', async () => {
+            if (confirm('Clear all logs?')) {
+                await storage.clearLogs();
+                updateLogs();
+            }
+        });
+
+        updateLogs();
+
+        // System info
+        document.getElementById('browserInfo').textContent = navigator.userAgent.split(' ').pop();
+        document.getElementById('platformInfo').textContent = navigator.platform;
+        document.getElementById('languageInfo').textContent = navigator.language;
+        document.getElementById('onlineInfo').textContent = navigator.onLine ? 'Yes' : 'No';
+
+        // Export bundle
+        document.getElementById('exportBundleBtn').addEventListener('click', async () => {
+            const logs = await storage.getLogs(1000);
+            const files = await storage.getAllFiles();
+            const settingsData = settings.export();
+
+            const bundle = {
+                timestamp: new Date().toISOString(),
+                system: {
+                    userAgent: navigator.userAgent,
+                    platform: navigator.platform,
+                    language: navigator.language,
+                    online: navigator.onLine
+                },
+                storage: await storage.getSize(),
+                files: files.map(f => ({
+                    id: f.id,
+                    filename: f.filename,
+                    pages: f.pages,
+                    status: f.status,
+                    timestamp: f.timestamp
+                })),
+                settings: settingsData,
+                logs: logs
+            };
+
+            const text = JSON.stringify(bundle, null, 2);
+            const blob = new Blob([text], { type: 'application/json' });
+            downloadFile(blob, `support-bundle-${Date.now()}.json`);
+        });
+    </script>
+</body>
+
+</html>

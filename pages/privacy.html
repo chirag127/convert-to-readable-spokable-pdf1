@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Readable Spokable PDF</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/dark-mode.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="logo">📄→🔊</span>
+                <span class="brand-text">Readable Spokable PDF</span>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="faq.html" class="nav-link">FAQ</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section>
+            <h1>Privacy Policy</h1>
+            <p><em>Last updated: November 19, 2025</em></p>
+
+            <h2>Overview</h2>
+            <p>
+                Readable Spokable PDF is a client-side web application that runs entirely in your browser.
+                We are committed to protecting your privacy and being transparent about how your data is handled.
+            </p>
+
+            <h2>Data Collection</h2>
+            <p>We do NOT collect, store, or transmit any of your data to our servers because we don't have any servers.
+                All processing happens locally in your browser.</p>
+
+            <h2>Local Storage</h2>
+            <p>The application stores data locally in your browser using:</p>
+            <ul>
+                <li><strong>LocalStorage:</strong> API keys and UI preferences (dark mode, welcome banner state)</li>
+                <li><strong>IndexedDB:</strong> Uploaded PDF files, processed text, batches, logs, and settings</li>
+            </ul>
+            <p>This data never leaves your device unless you explicitly export it.</p>
+
+            <h2>Third-Party Services</h2>
+            <p>The application communicates with the following third-party services:</p>
+
+            <h3>Google AI Studio (Gemini API)</h3>
+            <ul>
+                <li>Purpose: Text transformation using AI</li>
+                <li>Data sent: Text extracted from your PDFs, your API key</li>
+                <li>Privacy policy: <a href="https://policies.google.com/privacy" target="_blank">Google Privacy
+                        Policy</a></li>
+                <li>Your API key is sent directly from your browser to Google's servers</li>
+                <li>We do not intercept, log, or store your API communications</li>
+            </ul>
+
+            <h3>CDN Services</h3>
+            <ul>
+                <li>Purpose: Loading PDF.js and jsPDF libraries</li>
+                <li>Provider: Cloudflare CDN</li>
+                <li>Data sent: Standard HTTP request headers</li>
+            </ul>
+
+            <h2>API Keys</h2>
+            <p>
+                Your Google AI Studio API key is stored only in your browser's LocalStorage. It is never
+                transmitted to any server other than Google AI Studio endpoints. You can clear your API
+                key at any time from the Settings panel.
+            </p>
+
+            <h2>File Processing</h2>
+            <p>
+                When you upload a PDF:
+            </p>
+            <ul>
+                <li>The file is read and processed entirely in your browser</li>
+                <li>Text is extracted using PDF.js (client-side)</li>
+                <li>Extracted text is sent to Google AI Studio for transformation</li>
+                <li>The original PDF and transformed text are stored in your browser's IndexedDB</li>
+                <li>No files are uploaded to our servers (we don't have any)</li>
+            </ul>
+
+            <h2>Logs</h2>
+            <p>
+                The application maintains local logs of API requests and processing events for debugging
+                purposes. These logs are stored in IndexedDB and never leave your browser. API keys in
+                logs are automatically redacted. You can view, export, or clear logs from the Diagnostics page.
+            </p>
+
+            <h2>Cookies</h2>
+            <p>
+                This application does not use cookies.
+            </p>
+
+            <h2>Data Deletion</h2>
+            <p>
+                You can delete your data at any time:
+            </p>
+            <ul>
+                <li>Individual files: Use the delete button on stored files</li>
+                <li>API keys: Use "Clear API Keys" in Settings</li>
+                <li>All data: Use "Erase All Data" in Settings → Advanced</li>
+                <li>Browser data: Clear your browser's LocalStorage and IndexedDB manually</li>
+            </ul>
+
+            <h2>Security</h2>
+            <p>
+                While we implement security best practices, please note:
+            </p>
+            <ul>
+                <li>Your API key is stored in plain text in LocalStorage (browser limitation)</li>
+                <li>Anyone with access to your device can potentially access stored data</li>
+                <li>Use device-level security (passwords, encryption) to protect your data</li>
+                <li>Don't share your API key with others</li>
+                <li>Regularly clear stored files if they contain sensitive information</li>
+            </ul>
+
+            <h2>Children's Privacy</h2>
+            <p>
+                This service is not directed to children under 13. We do not knowingly collect information
+                from children.
+            </p>
+
+            <h2>Changes to This Policy</h2>
+            <p>
+                We may update this privacy policy from time to time. Changes will be posted on this page
+                with an updated revision date.
+            </p>
+
+            <h2>Contact</h2>
+            <p>
+                If you have questions about this privacy policy, please contact us through the Contact page.
+            </p>
+        </section>
+    </main>
+</body>
+
+</html>

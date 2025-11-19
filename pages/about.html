@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Readable Spokable PDF</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/dark-mode.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="logo">📄→🔊</span>
+                <span class="brand-text">Readable Spokable PDF</span>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link active">About</a>
+                <a href="faq.html" class="nav-link">FAQ</a>
+                <a href="diagnostics.html" class="nav-link">Diagnostics</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section>
+            <h1>About Readable Spokable PDF</h1>
+
+            <h2>What is this?</h2>
+            <p>
+                Readable Spokable PDF is a browser-based tool that transforms technical PDFs into natural,
+                spoken-friendly documents optimized for text-to-speech (TTS) consumption. It uses Google's
+                Gemini AI to intelligently convert complex technical content into easy-to-listen narratives.
+            </p>
+
+            <h2>Why did we build this?</h2>
+            <p>
+                Technical documentation, research papers, and educational materials are often filled with
+                code blocks, mathematical notation, tables, and figures that don't translate well to
+                text-to-speech systems. When you try to listen to these documents using TTS apps, you end
+                up hearing code read line-by-line, tables read cell-by-cell, and math symbols spoken as
+                raw characters.
+            </p>
+            <p>
+                This tool solves that problem by:
+            </p>
+            <ul>
+                <li>Converting code blocks into descriptive explanations</li>
+                <li>Transforming tables into narrative sentences</li>
+                <li>Converting mathematical notation into spoken form</li>
+                <li>Describing figures and images clearly</li>
+                <li>Adding natural transitions and rhythm for better listening</li>
+            </ul>
+
+            <h2>How does it work?</h2>
+            <ol>
+                <li><strong>Text Extraction:</strong> We extract text from your PDF using PDF.js</li>
+                <li><strong>Intelligent Chunking:</strong> The text is split into manageable batches with overlap</li>
+                <li><strong>AI Transformation:</strong> Each batch is sent to Google's Gemini AI with specialized
+                    prompts</li>
+                <li><strong>Smart Assembly:</strong> Transformed batches are reassembled into a coherent document</li>
+                <li><strong>PDF Generation:</strong> A new, TTS-friendly PDF is created with your preferred formatting
+                </li>
+            </ol>
+
+            <h2>Privacy & Security</h2>
+            <p>
+                Your privacy is important to us:
+            </p>
+            <ul>
+                <li>All processing happens in your browser - no server uploads</li>
+                <li>Your API key is stored only in your browser's LocalStorage</li>
+                <li>Files are stored only in your browser's IndexedDB</li>
+                <li>No data is sent to any third party except Google AI Studio</li>
+                <li>You can erase all data at any time from Settings</li>
+            </ul>
+
+            <h2>Technology Stack</h2>
+            <ul>
+                <li><strong>PDF.js:</strong> Mozilla's PDF rendering library for text extraction</li>
+                <li><strong>jsPDF:</strong> PDF generation library</li>
+                <li><strong>Google Gemini AI:</strong> Advanced language model for text transformation</li>
+                <li><strong>IndexedDB:</strong> Browser storage for persistence</li>
+                <li><strong>Vanilla JavaScript:</strong> No frameworks, just modern ES6+</li>
+            </ul>
+
+            <h2>Open Source</h2>
+            <p>
+                This project is open source and available on GitHub. Contributions, bug reports,
+                and feature requests are welcome!
+            </p>
+
+            <h2>Credits</h2>
+            <p>
+                Built with ❤️ for the accessibility and education communities.
+            </p>
+        </section>
+    </main>
+</body>
+
+</html>
